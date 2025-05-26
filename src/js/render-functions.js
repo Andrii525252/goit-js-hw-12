@@ -2,17 +2,13 @@ import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const galleryEl = document.querySelector('.gallery');
-const loaderEl  = document.querySelector('.loader');
+const loaderEl = document.querySelector('.loader');
+const loadMoreBtn = document.querySelector('.load-more');
 
 const lightbox = new SimpleLightbox('.gallery a', {
   captionsData: 'alt',
   captionDelay: 250,
 });
-
-lightbox.on('closed.simplelightbox', () => {
-  document.body.style.overflow = 'auto';
-});
-
 
 export function createGallery(images) {
   const markup = images
@@ -20,7 +16,7 @@ export function createGallery(images) {
       ({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) =>
         `<li class="gallery-item">
            <a href="${largeImageURL}">
-             <img src="${webformatURL}" alt="${tags}" />
+             <img src="${webformatURL}" alt="${tags}" width="400px" height="250px"/>
            </a>
            <div class="info">
              <p><b>Likes:</b> ${likes}</p>
@@ -33,7 +29,7 @@ export function createGallery(images) {
     .join('');
 
   galleryEl.insertAdjacentHTML('beforeend', markup);
-  lightbox.refresh();         
+  lightbox.refresh();
 }
 
 export function clearGallery() {
@@ -46,4 +42,12 @@ export function showLoader() {
 
 export function hideLoader() {
   loaderEl.classList.remove('visible');
+}
+
+export function showLoadMoreButton() {
+  loadMoreBtn.classList.remove('hidden');
+}
+
+export function hideLoadMoreButton() {
+  loadMoreBtn.classList.add('hidden');
 }
